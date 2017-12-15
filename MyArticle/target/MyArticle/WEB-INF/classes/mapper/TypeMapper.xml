@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zyz.dao.TypeMapper">
+
+    <insert id="save" parameterType="com.zyz.bean.Type">
+        <![CDATA[
+            insert into t_type(type_name, des) values(#{typeName}, #{des})
+        ]]>
+    </insert>
+
+    <select id="listAll" resultType="type">
+        <![CDATA[
+            select * from t_type
+        ]]>
+    </select>
+
+</mapper>

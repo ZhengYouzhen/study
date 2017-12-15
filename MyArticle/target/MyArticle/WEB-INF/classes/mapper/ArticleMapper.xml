@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zyz.dao.ArticleMapper">
+
+    <insert id="save" parameterType="com.zyz.bean.Article">
+        <![CDATA[
+            insert into t_article(title, userId, typeId, content, created_time)
+            values(#{title}, #{userId}, #{typeId}, #{content}, #{createdTime})
+        ]]>
+    </insert>
+
+    <select id="getById" parameterType="long" resultType="com.zyz.vo.ArticleVO">
+        <![CDATA[
+            select a.id, a.title, a.first_img as firstImg, a.content, a.created_time, a.modify_time, a.status,
+            t.type_name as typeName, u.id as userId, u.name as author
+            from t_article a, t_type t, t_user u
+            where a.typeId = t.id and a.userId = u.id and a.id = #{id}
+        ]]>
+    </select>
+
+    <select id="listPagerCriteria" resultType="com.zyz.vo.ArticleVO">
+
+    </select>
+
+    <select id="countCriteria" resultType="long" parameterType="com.zyz.vo.ArticleVO">
+
+    </select>
+
+    <select id="listPager" resultType="com.zyz.vo.ArticleVO" parameterType="com.zyz.common.Pager">
+        <![CDATA[
+            select a.id, a.title, a.first_img as firstImg, a.content, a.created_time, a.modify_time, a.status,
+            t.type_name as typeName, u.id as userId, u.name as author from t_article a, t_type t, t_user u
+            where a.typeId = t.id and a.userId = u.id
+            limit #{beginIndex}, #{pageSize}
+        ]]>
+    </select>
+
+    <select id="count" resultType="long">
+        <![CDATA[
+            select count(a.id) from t_article a, t_type t, t_user u
+            where a.typeId = t.id and a.userId = u.id
+        ]]>
+    </select>
+</mapper>
