@@ -31,7 +31,7 @@
                 <label class="beg-login-icon">
                     <i class="layui-icon">&#xe612;</i>
                 </label>
-                <input type="text" name="name" lay-verify autocomplete="off" placeholder="请输入用户名（必填）" class="layui-input">
+                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入用户名（必填）" class="layui-input">
             </div>
 
             <div class="layui-form-item">

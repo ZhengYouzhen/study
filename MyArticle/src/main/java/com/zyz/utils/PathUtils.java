@@ -8,7 +8,7 @@ public class PathUtils {
 
     public static String mkUploads() {
         String path = ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
-        File file = new File(path,"uploads");
+        File file = new File(path,"static/uploads");
         if(!file.exists()) {
             file.mkdirs();
         }

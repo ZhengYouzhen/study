@@ -1,6 +1,8 @@
 package com.zyz.service;
 
 import com.zyz.bean.Article;
+import com.zyz.common.Pager;
+import com.zyz.vo.ArticleVO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +31,17 @@ public class ArticleTest extends BaseTest{
     @Test
     public void testSelect() {
         articleService.getById(1L);
+    }
+
+    @Test
+    public void testListPage() {
+        ArticleVO article = new ArticleVO();
+        article.setTypeName("java");
+        Pager pager = articleService.listPagerCriteria(1,5,article);
+        for (Object object : pager.getRows()) {
+            ArticleVO articleVO = (ArticleVO) object;
+            System.out.println(articleVO);
+        }
     }
 
 }

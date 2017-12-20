@@ -4,10 +4,33 @@
 
 <mapper namespace="com.zyz.dao.ArticleMapper">
 
+    <sql id="article_query_common">
+        from t_article a, t_type t, t_user u
+        where a.typeId = t.id and a.userId = u.id
+    </sql>
+
+    <sql id="article_query_criteria">
+        <if test="query != null and query.title != null and query.title != ''">
+            and a.title like concat('%', #{query.title}, '%')
+        </if>
+        <if test="query != null and query.author != null and query.author != ''">
+            and u.name like concat('%', #{query.author}, '%')
+        </if>
+        <if test="query != null and query.typeName != null and query.typeName !=''">
+            and t.type_name like concat('%', #{query.typeName}, '%')
+        </if>
+        <if test="query != null and query.createdTime != null and query.createdTime != ''">
+            and a.createdTime <![CDATA[<=]]> #{query.createdTime}
+        </if>
+        <if test="query != null and query.modifyTime != null and query.modifyTime != ''">
+            and a.modifyTime <![CDATA[<=]]> #{query.modifyTime}
+        </if>
+    </sql>
+
     <insert id="save" parameterType="com.zyz.bean.Article">
         <![CDATA[
-            insert into t_article(title, userId, typeId, content, created_time)
-            values(#{title}, #{userId}, #{typeId}, #{content}, #{createdTime})
+            insert into t_article(title, userId, typeId, first_img, summary, created_time, summary)
+            values(#{title}, #{userId}, #{typeId}, #{firstImg}, #{summary}, #{createdTime}, #{summary})
         ]]>
     </insert>
 
@@ -21,16 +44,25 @@
     </select>
 
     <select id="listPagerCriteria" resultType="com.zyz.vo.ArticleVO">
+        <![CDATA[
+			select a.id, a.title, a.first_img as firstImg, a.summary, a.created_time, a.modify_time, a.status,
+            t.type_name as typeName, u.id as userId, u.name as author
+			]]>
+        <include refid="article_query_common" />
+        <include refid="article_query_criteria" />
+        limit #{pager.beginIndex}, #{pager.pageSize}
 
     </select>
 
     <select id="countCriteria" resultType="long" parameterType="com.zyz.vo.ArticleVO">
-
+        select count(a.id)
+        <include refid="article_query_common" />
+        <include refid="article_query_criteria" />
     </select>
 
     <select id="listPager" resultType="com.zyz.vo.ArticleVO" parameterType="com.zyz.common.Pager">
         <![CDATA[
-            select a.id, a.title, a.first_img as firstImg, a.content, a.created_time, a.modify_time, a.status,
+            select a.id, a.title, a.first_img as firstImg, a.summary, a.created_time, a.modify_time, a.status,
             t.type_name as typeName, u.id as userId, u.name as author from t_article a, t_type t, t_user u
             where a.typeId = t.id and a.userId = u.id
             limit #{beginIndex}, #{pageSize}

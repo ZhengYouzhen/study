@@ -4,18 +4,14 @@ public class UploadResult {
 
     private int code;
     private String msg;
-    private String data;
-    private String src;
-    private String title;
+    private Object data;
 
     public UploadResult() {}
 
-    public UploadResult(int code, String msg, String data, String src, String title) {
+    public UploadResult(int code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
-        this.src = src;
-        this.title  = title;
     }
 
     public int getCode() {
@@ -34,27 +30,12 @@ public class UploadResult {
         this.msg = msg;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

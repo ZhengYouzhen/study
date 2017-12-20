@@ -45,12 +45,17 @@ public class ArticleController {
         return status;
     }
 
+    @RequestMapping("detailsPage")
+    public String page() {
+        return "article/article";
+    }
+
     @RequestMapping("details")
     @ResponseBody
-    public ArticleVO getById(Long id) {
-        Object obj = articleService.getById(id);
-        ArticleVO aritcleVO = (ArticleVO) obj;
-        return aritcleVO;
+    public ArticleVO getById(Long articleId) {
+        Object obj = articleService.getById(articleId);
+        ArticleVO articleVO = (ArticleVO) obj;
+        return articleVO;
     }
 
     @RequestMapping("allArticle")
@@ -62,6 +67,12 @@ public class ArticleController {
     @ResponseBody
     public Pager listPager(int page, int limit) {
         return articleService.listPager(page, limit);
+    }
+
+    @RequestMapping("pagerCriteria")
+    @ResponseBody
+    public Pager listPagerCriteria(int page, int limit, ArticleVO articleVO) {
+        return articleService.listPagerCriteria(page, limit,articleVO);
     }
 
 }

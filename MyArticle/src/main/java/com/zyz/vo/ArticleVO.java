@@ -15,6 +15,8 @@ public class ArticleVO {
 
     private String firstImg;
 
+    private String summary;
+
     private String content;
 
     private Date createdTime;
@@ -57,6 +59,14 @@ public class ArticleVO {
 
     public void setFirstImg(String firstImg) {
         this.firstImg = firstImg;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getContent() {

@@ -74,10 +74,12 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;" id="info">基本资料</a></dd>
-                    <dd><a href="<%=path %>/user/out">注销</a></dd>
+                    <dd><a href="<%=path %>/user/outTest">注销</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a>&nbsp;&nbsp;</a></li>
+            <li class="layui-nav-item">
+                <a href="<%=path %>/"><i class="fa fa-sign-out" aria-hidden="true"></i> 首页</a>
+            </li>
         </ul>
     </div>
 

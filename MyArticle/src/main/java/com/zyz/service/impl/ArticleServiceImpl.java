@@ -54,4 +54,13 @@ public class ArticleServiceImpl implements ArticleService {
         pager.setTotal(articleMapper.count());
         return pager;
     }
+
+    @Override
+    public Pager listPagerCriteria(int pageNo, int pageSize, Object obj) {
+        Pager pager = new Pager(pageNo, pageSize);
+        pager.setRows(articleMapper.listPagerCriteria(pager, obj));
+        pager.setTotal(articleMapper.countCriteria(obj));
+        return pager;
+    }
+
 }

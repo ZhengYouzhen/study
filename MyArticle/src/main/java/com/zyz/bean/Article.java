@@ -21,6 +21,8 @@ public class Article {
 
     private int status;
 
+    private String summary;
+
     public Long getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class Article {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }
