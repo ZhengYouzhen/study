@@ -29,8 +29,8 @@
 
     <insert id="save" parameterType="com.zyz.bean.Article">
         <![CDATA[
-            insert into t_article(title, userId, typeId, first_img, summary, created_time, summary)
-            values(#{title}, #{userId}, #{typeId}, #{firstImg}, #{summary}, #{createdTime}, #{summary})
+            insert into t_article(title, userId, typeId, first_img, content, created_time, summary)
+            values(#{title}, #{userId}, #{typeId}, #{firstImg}, #{content}, #{createdTime}, #{summary})
         ]]>
     </insert>
 
