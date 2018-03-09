@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="redis-web@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+    <root id="1"/>
+    <schema id="2" parent="1" name="redis-web">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bilibili"/>
+    <schema id="4" parent="1" name="decorate"/>
+    <schema id="5" parent="1" name="d_activiti"/>
+    <schema id="6" parent="1" name="d_article"/>
+    <schema id="7" parent="1" name="d_auth"/>
+    <schema id="8" parent="1" name="d_decorate"/>
+    <schema id="9" parent="1" name="d_game"/>
+    <schema id="10" parent="1" name="d_houseplatform"/>
+    <schema id="11" parent="1" name="d_new"/>
+    <schema id="12" parent="1" name="d_news"/>
+    <schema id="13" parent="1" name="d_ptp"/>
+    <schema id="14" parent="1" name="d_shiro"/>
+    <schema id="15" parent="1" name="d_ssh"/>
+    <schema id="16" parent="1" name="d_ssh_case"/>
+    <schema id="17" parent="1" name="d_stu"/>
+    <schema id="18" parent="1" name="d_test"/>
+    <schema id="19" parent="1" name="information_schema"/>
+    <schema id="20" parent="1" name="mysql"/>
+    <schema id="21" parent="1" name="performance_schema"/>
+    <schema id="22" parent="1" name="pjzb"/>
+    <schema id="23" parent="1" name="sakila"/>
+    <schema id="24" parent="1" name="ssm"/>
+    <schema id="25" parent="1" name="ssm_case"/>
+    <schema id="26" parent="1" name="sys"/>
+    <schema id="27" parent="1" name="world"/>
+    <table id="28" parent="2" name="t_user"/>
+    <column id="29" parent="28" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="30" parent="28" name="phone">
+      <Position>2</Position>
+      <DataType>varchar(11)|0</DataType>
+    </column>
+    <column id="31" parent="28" name="name">
+      <Position>3</Position>
+      <DataType>varchar(11)|0</DataType>
+    </column>
+    <column id="32" parent="28" name="gender">
+      <Position>4</Position>
+      <DataType>char(1)|0</DataType>
+    </column>
+    <key id="33" parent="28" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
