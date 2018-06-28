@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试报表数据</title>
+</head>
+<body>
+测试报表数据
+<div id="test" style="border:1px dashed #000;"></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script>
+    var datas = [
+        {"ppm": 1000, "type_tr": "A", "fail_part": "零件01"},
+        {"ppm": 2000, "type_tr": "B", "fail_part": "零件02"},
+        {"ppm": 100, "type_tr": "A", "fail_part": "零件03"},
+        {"ppm": 1100, "type_tr": "C", "fail_part": "零件04"},
+        {"ppm": 1200, "type_tr": "A", "fail_part": "零件05"},
+        {"ppm": 3200, "type_tr": "C", "fail_part": "零件06"}
+        ];
+    //存放新的数据
+    var bht = [];
+
+    $(function () {
+        //arr用来存放循环过的type_tr值
+        var arr = [];
+        if (datas.length > 0) {
+            for (var i = 0; i < datas.length; i++) {
+                //判断type_er是否在数组中，如果没有，则进入，并且最后再写入arr中
+                if (!IsInArray(arr, datas[i].type_tr)) {
+                    var datax = [];
+                    var datay = [];
+                    var data = {};
+                    for (var j = 0; j < datas.length; j++) {
+                        //循环数据并处理
+                        if (datas[i].type_tr == datas[j].type_tr) {
+                            datax.push(
+                                datas[j].ppm
+                            );
+                            datay.push(
+                                datas[j].fail_part
+                            );
+                        }
+                    }
+                    data = {
+                        "type_tr": datas[i].type_tr,
+                        "datax": datax,
+                        "datay": datay
+                    };
+                    bht.push(data);
+                    //将type_tr写入arr中
+                    arr.push(datas[i].type_tr);
+                }
+            }
+            console.log("bht：" + JSON.stringify(bht));
+            //数据组装完后开始循环报表
+            aa();
+        } else {
+            message.alert("该日期段暂无数据");
+        }
+    });
+    //判断某个值是否在数组里
+    function IsInArray(arr, val) {
+        var testStr = ',' + arr.join(",") + ",";
+        return testStr.indexOf("," + val + ",") != -1;
+    }
+    //动态生成div并显示报表
+    function aa() {
+        var divTest = document.getElementById("test");
+        console.log(divTest);
+        for(var i =0; i < bht.length; i++) {
+            var oDiv = document.createElement('div');
+            oDiv.id = "bht" + i;
+            oDiv.style = "width:500px;height:400px;";
+            divTest.appendChild(oDiv);
+            empStatics("bht" + i, bht[i]);
+        }
+    }
+    //highchart显示函数
+    function empStatics(id, data) {
+        new Highcharts.chart(id,{
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: data.type_tr
+            },
+            subtitle: {
+                text: data.type_tr
+            },
+            xAxis: {
+                categories: data.datay,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: data.type_tr
+                }
+            },
+            plotOptions: {
+                column: {
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: data.type_tr,
+                data: data.datax
+            }]
+        });
+    }
+
+</script>
+
+</html>

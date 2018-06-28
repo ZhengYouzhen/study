@@ -130,11 +130,13 @@ public class DESUtils {
             System.out.println("加密后的字符：" + des1.encrypt(test1));
             System.out.println("解密后的字符：" + des1.decrypt(des1.encrypt(test1)));
 
-            String test2 = "123456789";
+            String test2 = "123456789,500";
             DESUtils des2 = new DESUtils("leeme32nz");// 自定义密钥
             System.out.println("加密前的字符：" + test2);
             System.out.println("加密后的字符：" + des2.encrypt(test2));
             System.out.println("解密后的字符：" + des2.decrypt(des2.encrypt(test2)));
+            String[] aa = test2.split(",");
+            System.out.println(aa[1]);
         } catch (Exception e) {
             e.printStackTrace();
         }

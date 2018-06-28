@@ -5,8 +5,12 @@
     <title>首页</title>
 </head>
 <body>
-<h1><span th:text="${test}"></span>直接从model那的数据</h1>
+<h1><span th:text="${test}"></span>直接从model拿的数据</h1>
 <p>[[${test1}]]<a onclick="aa();">点我</a></p>
+<input id="test" name="test" value="10"/>
+<input id="test1" name="test1" value="10"/>
+<p><a onclick="bb();">点我测试</a></p>
+
 
 <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
 <script th:inline="javascript">
@@ -14,8 +18,21 @@
     console.log(test);
 </script>
 <script>
+    var a = "全局变量";
     function aa() {
-        alert(1);
+        var b = a + "test";
+        a = "11111";
+        alert(a);
+        alert(b);
+    }
+
+    function bb() {
+        var testValue =  Number(document.getElementById("test").value);
+        var testValue1 =  document.getElementById("test1").value;
+        console.log(testValue);
+        alert(testValue + testValue1);
+        alert(testValue + 10);
+        alert(a);
     }
 </script>
 </body>
