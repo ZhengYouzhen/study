@@ -10,6 +10,11 @@
 <input id="test" name="test" value="10"/>
 <input id="test1" name="test1" value="10"/>
 <p><a onclick="bb();">点我测试</a></p>
+<select id="selectId" onchange="cc(this.id)">
+    <option value="1">选择1</option>
+    <option value="2">选择2</option>
+    <option value="3">选择3</option>
+</select>
 
 
 <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
@@ -27,13 +32,40 @@
     }
 
     function bb() {
-        var testValue =  Number(document.getElementById("test").value);
-        var testValue1 =  document.getElementById("test1").value;
+        // document.getElementById("test").value
+        var testValue =  utf16toEntities(unescape(document.getElementById("test").value));
         console.log(testValue);
-        alert(testValue + testValue1);
-        alert(testValue + 10);
-        alert(a);
     }
+
+    function cc(e) {
+        var objS = document.getElementById(e);
+        var typeVal = objS.options[objS.selectedIndex].value;
+        console.log("这是类型：" + typeVal);
+    }
+
+
+    //转义表情
+    function utf16toEntities(str) {
+        var patt = /[\ud800-\udbff][\udc00-\udfff]/g;
+        // 检测utf16字符正则
+        str = str.replace(patt, function(char) {
+            var H, L, code;
+            if (char.length === 2) {
+                H = char.charCodeAt(0);
+                // 取出高位
+                L = char.charCodeAt(1);
+                // 取出低位
+                code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00;
+                // 转换算法
+                return "&#" + code + ";";
+            } else {
+                return char;
+            }
+        });
+        return str;
+    }
+
+
 </script>
 </body>
 </html>

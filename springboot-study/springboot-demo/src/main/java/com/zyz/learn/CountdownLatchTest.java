@@ -22,24 +22,21 @@ public class CountdownLatchTest {
         //因为有三个战士，所以初始值为3，每一个战士执行任务完毕则cutDown一次，当三个都执行完毕，变为0，则指挥官停止等待。
         final CountDownLatch cdAnswer = new CountDownLatch(3);
         for (int i = 0; i < 3; i++) {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "正准备接受命令");
-                        cdOrder.await(); //战士们都处于等待命令状态
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "已接受命令");
-                        Thread.sleep((long) (Math.random() * 10000));
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "回应命令处理结果");
+            Runnable runnable = () -> {
+                try {
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "正准备接受命令");
+                    cdOrder.await(); //战士们都处于等待命令状态
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "已接受命令");
+                    Thread.sleep((long) (Math.random() * 10000));
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "回应命令处理结果");
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        cdAnswer.countDown(); //任务执行完毕，返回给指挥官，cdAnswer减1。
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    cdAnswer.countDown(); //任务执行完毕，返回给指挥官，cdAnswer减1。
                 }
             };
             //为线程池添加任务
