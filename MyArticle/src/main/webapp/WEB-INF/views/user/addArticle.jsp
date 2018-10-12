@@ -76,7 +76,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="<%=path %>/static/layui/layui.js"></script>
 <script>
     layui.use(['form', 'laytpl', 'layedit', 'upload'], function () {

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试表情</title>
+    <style>
+        .you {
+            width: 100px;
+            height: 50px;
+            border: 1px solid #F00
+        }
+    </style>
+</head>
+<body>
+<input id="test" name="test"/>
+<textarea id="test1"></textarea>
+<p><a onclick="bb();">点我测试</a></p>
+<div id="div0" class="you">div0</div>
+<div id="div1" class="you" onmousedown="zyz(this.id);">div1</div>
+<div id="div2" class="you" oncontextmenu="youON(this.id);">div2</div>
+<div id="div3" class="you" oncontextmenu="youON(this.id);">div3</div>
+<div id="div4" class="you" oncontextmenu="youON(this.id);">div4</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script>
+    function bb() {
+        // document.getElementById("test").value
+        var testValue = utf16toEntities(unescape(document.getElementById("test").value));
+        var test1Value = utf16toEntities(unescape($("#test1").val()));
+        console.log(testValue);
+        console.log(test1Value);
+    }
+
+    //转义表情
+    function utf16toEntities(str) {
+        var patt = /[\ud800-\udbff][\udc00-\udfff]/g;
+        // 检测utf16字符正则
+        str = str.replace(patt, function (char) {
+            var H, L, code;
+            if (char.length === 2) {
+                H = char.charCodeAt(0);
+                // 取出高位
+                L = char.charCodeAt(1);
+                // 取出低位
+                code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00;
+                // 转换算法
+                return "&#" + code + ";";
+            } else {
+                return char;
+            }
+        });
+        return str;
+    }
+
+    //点击右键事件
+    function youON(e) {
+        alert(e);
+        e.preventDefault();
+    }
+
+    function zyz(z) {
+        document.getElementById(z).onmousedown = function (e) {
+            if (e.button == 2) {
+                alert(z + "你点了右键");
+            } else if (e.button == 0) {
+                alert(z + "你点了左键");
+            } else if (e.button == 1) {
+                alert(z + "你点了滚轮");
+            }
+            e.preventDefault();
+        }
+    }
+
+    window.onload = function () {
+        //去掉默认的contextmenu事件，否则会和右键事件同时出现。
+        document.oncontextmenu = function (e) {
+            e.preventDefault();
+        };
+        document.getElementById("div0").onmousedown = function (e) {
+            if (e.button == 2) {
+                alert("你点了右键");
+            } else if (e.button == 0) {
+                alert("你点了左键");
+            } else if (e.button == 1) {
+                alert("你点了滚轮");
+            }
+        }
+    }
+    //ajax原型
+    $.ajax({
+        //类型，post，get
+        type: "GET",
+        //url，默认为当前路径
+        url: "test.json",
+        //是否为异步，true和false，不写时默认未true
+        async: true,
+        //传入的参数
+        data: {username: "userName", content: "content"},
+        //返回的格式，xml、html、script、json、text
+        dataType: "json",
+        //请求成功后调用的回调函数
+        success: function (data) {
+            // 清空resText里面的所有内容
+            $('#resText').empty();
+
+            var html = '';
+
+            $.each(data, function (commentIndex, comment) {
+
+                html += '<div class="comment"><h6>' + comment['username']
+
+                    + ':</h6><p class="para"' + comment['content']
+
+                    + '</p></div>';
+            })
+        }
+    });
+//      $.post()，保密，数据量大，一般用户处理请求
+    $.post(
+        //地址，必填
+        "url",
+        //传入参数
+        {userName: "userName",content: "content"},
+        //函数回调
+        function (data) {
+            
+        },
+        //类型，一般会内部判断返回类型
+        "json"
+    );
+</script>
+
+</html>

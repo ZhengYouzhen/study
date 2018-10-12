@@ -1,7 +1,10 @@
 package com.zyz.dao;
 
 import com.zyz.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserMapper {
@@ -16,4 +19,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    int insertList(List<User> user);
+
+    void updateBatch(@Param("age") Integer age, @Param("list") List<String> list);
 }

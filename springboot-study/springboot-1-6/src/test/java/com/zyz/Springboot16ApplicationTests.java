@@ -10,25 +10,29 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.Serializable;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class Springboot16ApplicationTests {
 
-	@Autowired
+	/*@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
 	@Autowired
-	private RedisTemplate<String, User> redisTemplate;
+	private RedisTemplate<Serializable, Object> redisTemplate;*/
+
+	private boolean aa;
 
 	@Test
 	public void test() throws Exception {
 
 		// 保存字符串
-		stringRedisTemplate.opsForValue().set("aaa", "111");
-		Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
+//		stringRedisTemplate.opsForValue().set("aaa", "111");
+//		Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
 
 		// 保存对象
-		User user = new User("超人", 20);
+		/*User user = new User("超人", 20);
 		redisTemplate.opsForValue().set(user.getUsername(), user);
 
 		user = new User("蝙蝠侠", 30);
@@ -39,7 +43,18 @@ public class Springboot16ApplicationTests {
 
 		Assert.assertEquals(20, redisTemplate.opsForValue().get("超人").getAge().longValue());
 		Assert.assertEquals(30, redisTemplate.opsForValue().get("蝙蝠侠").getAge().longValue());
-		Assert.assertEquals(40, redisTemplate.opsForValue().get("蜘蛛侠").getAge().longValue());
+		Assert.assertEquals(40, redisTemplate.opsForValue().get("蜘蛛侠").getAge().longValue());*/
 
 	}
+
+
+	@Test
+	public void booleaTest() {
+		if(aa) {
+			System.out.println("true");
+		} else {
+			System.out.println("false");
+		}
+	}
+
 }

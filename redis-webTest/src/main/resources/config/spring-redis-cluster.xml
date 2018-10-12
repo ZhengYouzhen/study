@@ -23,7 +23,7 @@
                     <constructor-arg name="host" value="${redis.host1}"></constructor-arg>
                     <constructor-arg name="port" value="${redis.port1}"></constructor-arg>
                 </bean>
-                <bean class="org.springframework.data.redis.connection.RedisNode">
+                <!--<bean class="org.springframework.data.redis.connection.RedisNode">
                     <constructor-arg name="host" value="${redis.host2}"></constructor-arg>
                     <constructor-arg name="port" value="${redis.port2}"></constructor-arg>
                 </bean>
@@ -42,7 +42,7 @@
                 <bean class="org.springframework.data.redis.connection.RedisNode">
                     <constructor-arg name="host" value="${redis.host6}"></constructor-arg>
                     <constructor-arg name="port" value="${redis.port6}"></constructor-arg>
-                </bean>
+                </bean>-->
             </set>
         </property>
     </bean>

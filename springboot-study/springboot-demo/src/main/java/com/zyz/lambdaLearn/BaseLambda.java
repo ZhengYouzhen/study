@@ -22,8 +22,7 @@ public class BaseLambda{
             }
         });*/
 //        lambda表达式
-        /*Arrays.sort(atp, (String s1,String s2) -> (s1.compareTo(s2)));
-        */
+        Arrays.sort(atp, (String s1,String s2) -> (s1.compareTo(s2)));
 //        根据字符串空格后的字面排序----------------------------------------
         /*Arrays.sort(atp, new Comparator<String>() {
             @Override
@@ -49,8 +48,8 @@ public class BaseLambda{
 //      lambda表达式
         /*Arrays.sort(atp, (String s1, String s2) -> (s2.length() - s1.length()));*/
 //        根据最后一个字符排序-----------------------------------------------
-        Comparator<String> comparator = (String s1, String s2) ->(s1.charAt(s1.length() - 1) - s2.charAt(s2.length() - 1));
-        Arrays.sort(atp, comparator);
+        /*Comparator<String> comparator = (String s1, String s2) ->(s1.charAt(s1.length() - 1) - s2.charAt(s2.length() - 1));
+        Arrays.sort(atp, comparator);*/
 
         List<String> players = Arrays.asList(atp);
 //        lambada表达式遍历，-> ()，直接写返回值。-> {}，可以写方法。:: 不太懂这什么意思
@@ -84,4 +83,5 @@ Set set = new LinkedHashSet();
         LambdaTest lambdaTest = (x) -> 5;
         return lambdaTest.a(str);
     }
+
 }

@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Class-Path: jul-to-slf4j-1.7.25.jar spring-boot-starter-logging-2.0.0.
+ RELEASE.jar spring-jdbc-5.0.4.RELEASE.jar spring-jcl-5.0.4.RELEASE.ja
+ r spring-boot-starter-json-2.0.0.RELEASE.jar validation-api-2.0.1.Fin
+ al.jar hibernate-validator-6.0.7.Final.jar spring-tx-5.0.4.RELEASE.ja
+ r spring-boot-starter-thymeleaf-2.0.0.RELEASE.jar jboss-logging-3.3.2
+ .Final.jar logback-classic-1.2.3.jar spring-boot-starter-tomcat-2.0.0
+ .RELEASE.jar jackson-core-2.9.4.jar log4j-to-slf4j-2.10.0.jar jackson
+ -module-parameter-names-2.9.4.jar druid-1.1.6.jar spring-context-5.0.
+ 4.RELEASE.jar tomcat-embed-el-8.5.28.jar jackson-datatype-jdk8-2.9.4.
+ jar snakeyaml-1.19.jar spring-webmvc-5.0.4.RELEASE.jar mybatis-genera
+ tor-core-1.3.5.jar attoparser-2.0.4.RELEASE.jar classmate-1.3.4.jar j
+ ackson-datatype-jsr310-2.9.4.jar spring-boot-starter-web-2.0.0.RELEAS
+ E.jar mybatis-spring-1.3.2.jar spring-expression-5.0.4.RELEASE.jar sp
+ ring-boot-starter-2.0.0.RELEASE.jar mybatis-3.4.6.jar spring-web-5.0.
+ 4.RELEASE.jar tomcat-embed-websocket-8.5.28.jar spring-beans-5.0.4.RE
+ LEASE.jar tomcat-embed-core-8.5.28.jar spring-boot-autoconfigure-2.0.
+ 0.RELEASE.jar spring-core-5.0.4.RELEASE.jar mysql-connector-java-5.1.
+ 45.jar thymeleaf-3.0.9.RELEASE.jar slf4j-api-1.7.25.jar thymeleaf-ext
+ ras-java8time-3.0.1.RELEASE.jar lombok-1.16.18.jar spring-aop-5.0.4.R
+ ELEASE.jar mybatis-spring-boot-autoconfigure-1.3.2.jar spring-boot-st
+ arter-validation-2.0.0.RELEASE.jar spring-boot-2.0.0.RELEASE.jar spri
+ ng-boot-starter-jdbc-2.0.0.RELEASE.jar jackson-annotations-2.9.0.jar 
+ thymeleaf-spring5-3.0.9.RELEASE.jar mybatis-spring-boot-starter-1.3.2
+ .jar jackson-databind-2.9.4.jar unbescape-1.1.5.RELEASE.jar logback-c
+ ore-1.2.3.jar log4j-api-2.10.0.jar HikariCP-2.7.8.jar javax.annotatio
+ n-api-1.3.2.jar
+Main-Class: com.zyz.SpringbootDemoApplication
+

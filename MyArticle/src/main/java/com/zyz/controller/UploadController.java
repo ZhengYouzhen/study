@@ -25,7 +25,6 @@ public class UploadController {
      * @return
      */
     @PostMapping("upload")
-    @ResponseBody
     public String upload(MultipartFile file) {
         String result = null;
         System.out.println(file.getName());
@@ -47,7 +46,6 @@ public class UploadController {
     }
 
     @PostMapping("firist")
-    @ResponseBody
     public String fitstImg(MultipartFile file) {
         String status = null;
         Map<String,Object> map = new HashMap<String,Object>();

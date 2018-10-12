@@ -1,9 +1,10 @@
 package com.zyz.bean;
 
+
 import java.io.Serializable;
 
-public class User {
-    private Integer id;
+public class User implements Serializable {
+    private transient Integer id;
 
     private String name;
 
@@ -31,5 +32,14 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

@@ -4,6 +4,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author zyz
+ * @date 2018年7月26日
+ */
 @SpringBootApplication
 @MapperScan("com.zyz.dao")
 public class SpringbootDemoApplication {

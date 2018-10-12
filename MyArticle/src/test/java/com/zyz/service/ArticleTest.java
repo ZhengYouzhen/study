@@ -10,6 +10,7 @@ import com.zyz.vo.ArticleVO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -119,8 +120,27 @@ public class ArticleTest extends BaseTest {
     }
 
     @Test
-    public void testMap() {
+    public void testMap() throws IOException {
+        String str =this.getClass().getResource("test.txt").getPath();
+        InputStream inputStream = this.getClass().getResourceAsStream("/test.txt");
+        System.out.println(str + "----------------");
+        byte[] bytes = new byte[1024];
+        int length;
+        while((length = inputStream.read(bytes)) != -1) {
+            System.out.write(bytes, 0, length);
+        }
+    }
 
+    @Test
+    public void setTestABC() throws IOException {
+        File file = new File("./src/test.txt");
+        InputStream input =  new FileInputStream(file);
+        System.out.println(file);
+        byte[] bytes = new byte[1024];
+        int length;
+        while((length = input.read(bytes)) != -1) {
+            System.out.write(bytes, 0, length);
+        }
     }
 
 }

@@ -245,7 +245,7 @@ public class EnCode {
     }
     public static void main(String[] args) {
         EnCode test = new EnCode();
-        String oldString = "15083562589";
+        String oldString = "1";
         String SPKEY = "600";
         System.out.println("1。分配的SPKEY为: "+SPKEY);
         System.out.println("2。的内容为: "+oldString);

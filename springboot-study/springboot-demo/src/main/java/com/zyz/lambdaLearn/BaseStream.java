@@ -24,7 +24,7 @@ public class BaseStream {
             add(new Person("Shawn", "Randall", "Java programmer", "male", 30, 2300));
             add(new Person("Jayden", "Corrina", "Java programmer", "female", 35, 1700));
             add(new Person("Palmer", "Dene", "Java programmer", "male", 33, 2000));
-            add(new Person("Addison", "Pam", "Java programmer", "female", 34, 1300));
+            add(new Person("Addison", "Pam", "Java programmer", "female", 34, 1200));
             add(new Person("Addison", "Pam1", "Java programmer1", "female1", 341, 1300));
         }
     };
@@ -43,6 +43,7 @@ public class BaseStream {
             add(new Person("Evonne", "Shari", "PHP programmer", "female", 40, 1800));
         }
     };
+
 
     /**
      * Stream是对集合的包装,通常和lambda一起使用。
@@ -114,13 +115,13 @@ public class BaseStream {
         testPerformance();
 //      自定义写方法根据姓去除重复
         List<Person> personList = new ArrayList<>();
-         javaProgrammers.forEach((p2) -> {
-             boolean b = personList.stream().anyMatch(u -> u.getFirstName().equals(p2.getFirstName()));
-             if (!b) {
-                 personList.add(p2);
-             }
-         });
-         personList.forEach(a ->System.out.println("根据姓去除重复：" + a.getFirstName()));
+        javaProgrammers.forEach((p2) -> {
+            boolean b = personList.stream().anyMatch(u -> u.getFirstName().equals(p2.getFirstName()));
+            if (!b) {
+                personList.add(p2);
+            }
+        });
+        personList.forEach(a -> System.out.println("根据姓去除重复：" + a.getFirstName()));
     }
 
     public static void testPerformance() {

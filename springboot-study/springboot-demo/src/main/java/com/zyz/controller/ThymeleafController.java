@@ -13,9 +13,14 @@ public class ThymeleafController {
 
     @RequestMapping("")
     public String index(ModelMap map) {
-        map.addAttribute("test","testValue");
-        map.addAttribute("test1","testValue1");
+        map.addAttribute("test", "testValue");
+        map.addAttribute("test1", "testValue1");
         return "index";
+    }
+
+    @RequestMapping("login")
+    public String login() {
+        return "ThirdLogin";
     }
 
 }
