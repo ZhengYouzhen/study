@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>反馈管理列表</title>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{/css/common.css}" media="all"/>
+</head>
+<body>
+    <form class="layui-form bg-form" id="inputForm" action="/page/message/list" method="post">
+        <input type="hidden" id="pageNo" name="pageNo" th:value="${page.pageNum}"/>
+        <input type="hidden" id="pageSize" name="pageSize" th:value="${page.pageSize}"/>
+        <input type="hidden" id="pageTotal" th:value="${page.total}"/>
+        <input type="hidden" id="msg" th:value="${msg}"/>
+            <div class="layui-form-item ">
+				<div class="layui-inline  bg-Btn">
+					<div class="layui-input-inline">
+						<button class="layui-btn" type="submit" id="subBtn">查询</button>
+						<a class="layui-btn" th:href="@{/page/message/form}">添加</a>
+					</div>
+				</div>
+				<div class="layui-row">
+					<div class="form-group">
+						<label for="createBy" class="bg-form-label">创建用户：</label>
+						<div class="layui-input-inline">
+							<input id="createBy" type="text" name="nickName" maxlength="11" class="layui-input" th:value="${message.createBy}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label  for="state" class="bg-form-label">状态：</label>
+						<div class="layui-input-inline">
+							<select id="state" name="state" lay-verify="required">
+								<option value="">请选择</option>
+								<option adds:dict="getSelect:state, ${message.state}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="bg-form-label">创建时间：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="start_createDate"  id="start_createDate" lay-verify="required" placeholder="yyyy-MM-dd"  class="layui-input"  th:value="${message.startCreateDate}">
+						</div>
+						<div class="layui-input-inline bg-cent">
+							<span> ~</span>
+						</div>
+						<div class="layui-input-inline">
+							<input type="text" name="end_createDate"   id="end_createDate" lay-verify="required" placeholder="yyyy-MM-dd"  class="layui-input"  th:value="${message.endCreateDate}">
+						</div>
+					</div>
+				</div>
+			</div>
+    </form>
+	<div class="layui-fluid">
+        <table class="layui-table  bg-table"  lay-filter="table-data">
+            <thead>
+			<tr>
+				<th  lay-data="{field:'userBy',width:100}">被留言用户</th>
+				<th  lay-data="{field:'createBy',width:100}">创建用户</th>
+				<th  lay-data="{field:'createDate'}">创建时间</th>
+				<th  lay-data="{field:'message'}">用户反馈内容</th>
+				<th  lay-data="{field:'state',width:60}">状态</th>
+				<th lay-data="{field:'operation', align: 'center',width: 180,fixed: 'right'}">操作</th>
+			</tr>
+            </thead>
+            <tbody>
+			<tr th:each="message : ${page.list}">
+							<td  th:text="${message.userBy}"></td>
+
+							<td  th:text="${message.createBy}"></td>
+
+							<td th:text="${#dates.format(message.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+							<td  th:text="${message.message}"></td>
+
+							<td adds:dict="getLabel:state,${message.state}"></td>
+
+				<td>
+					<div class="layui-btn-group">
+						<a class="layui-btn  layui-btn-sm" th:href="@{'/page/message/form?id=' + ${message.id}}" >修改</a>
+						<a class="layui-btn layui-btn-danger layui-btn-sm" th:href="@{'/page/message/delete?id=' + ${message.id}}">删除</a>
+					</div>
+				</td>
+			</tr>
+
+            </tbody>
+        </table>
+        <div id="paging"></div>
+
+</div>
+
+</body>
+<script th:src="@{/js/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/common/util.js}"></script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>菜单列表</title>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{/css/common.css}" media="all"/>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row bg-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" id="edt-search" name="edt-search" placeholder="请输入您搜索的内容" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline   bg-Btn">
+                <div class="layui-input-inline">
+                    <!--<label class="bg-form-label">搜索</label>-->
+                    <button class="layui-btn" id="btn-search">查询</button>
+                    <a class="layui-btn" th:href="@{/page/menu/form}">添加</a>
+                    <a class="layui-btn" lay-filter ="saveNum">保存排序</a>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="msg" th:value="${msg}"/>
+    </div>
+<table class="layui-table" id="menuTable" lay-filter="menuTable"></table>
+</div>
+<!-- 操作列 -->
+<script type="text/html" id="oper-col">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="addChild">添加下级</a>
+</script>
+
+</body>
+<script th:src="@{/js/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/menu.js}"></script>
+</html>

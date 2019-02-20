@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basic.zyz.module.dao.RoleDao">
+	
+	<sql id="roleColumns">
+		a.ID AS "id",
+		a.NAME AS "name",
+		a.ENNAME AS "enname",
+		a.ROLE_TYPE AS "roleType",
+		a.DATA_SCOPE AS "dataScope",
+		a.IS_SYS AS "isSys",
+		a.USEABLE AS "useable",
+		a.CREATE_BY AS "createBy",
+		a.CREATE_DATE AS "createDate",
+		a.UPDATE_BY AS "updateBy",
+		a.UPDATE_DATE AS "updateDate",
+		a.REMARKS AS "remarks"
+	</sql>
+	
+	<sql id="roleJoins">
+	</sql>
+	
+	<sql id="listOrCountSql">
+		FROM s_role a
+		<include refid="roleJoins"/>
+		<where>
+			<if test="id != null and id != ''">
+				AND a.ID = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.NAME LIKE concat('%',#{name},'%')
+			</if>
+			<if test="enname != null and enname != ''">
+				AND a.ENNAME = #{enname}
+			</if>
+			<if test="roleType != null and roleType != ''">
+				AND a.ROLE_TYPE = #{roleType}
+			</if>
+			<if test="dataScope != null and dataScope != ''">
+				AND a.DATA_SCOPE = #{dataScope}
+			</if>
+			<if test="isSys != null and isSys != ''">
+				AND a.IS_SYS = #{isSys}
+			</if>
+			<if test="useable != null and useable != ''">
+				AND a.USEABLE = #{useable}
+			</if>
+			<if test="createBy != null and createBy != ''">
+				AND a.CREATE_BY = #{createBy}
+			</if>
+			<if test="startCreateDate != null and startCreateDate != '' and endCreateDate != null and endCreateDate != ''">
+				AND a.create_date between #{startCreateDate} and #{endCreateDate}
+			</if>
+			<if test="startCreateDate != null and startCreateDate != '' and (endCreateDate == null or endCreateDate == '')">
+				AND a.create_date &gt; #{startCreateDate}
+			</if>
+			<if test="endCreateDate != null and endCreateDate != '' and (startCreateDate == null or startCreateDate == '')">
+				AND a.create_date &lt; #{endCreateDate}
+			</if>
+			<if test="updateBy != null and updateBy != ''">
+				AND a.UPDATE_BY = #{updateBy}
+			</if>
+			<if test="updateDate != null">
+				AND a.UPDATE_DATE = #{updateDate}
+			</if>
+			<if test="remarks != null and remarks != ''">
+				AND a.REMARKS = #{remarks}
+			</if>
+		</where>
+	</sql>
+
+	<select id="get" resultType="Role">
+		SELECT 
+			<include refid="roleColumns"/>
+		FROM s_role a
+		<include refid="roleJoins"/>
+		WHERE a.ID = #{id}
+	</select>
+
+	<select id="queryBy" resultType="Role">
+		SELECT
+			<include refid="roleColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findListCount" resultType="long">
+		SELECT COUNT(1) <include refid="listOrCountSql"/>
+	</select>
+	
+	<select id="queryList" resultType="Role">
+		SELECT 
+			<include refid="roleColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO s_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">ID,</if>
+			<if test="name != null">NAME,</if>
+			<if test="enname != null">ENNAME,</if>
+			<if test="roleType != null">ROLE_TYPE,</if>
+			<if test="dataScope != null">DATA_SCOPE,</if>
+			<if test="isSys != null">IS_SYS,</if>
+			<if test="useable != null">USEABLE,</if>
+			<if test="createBy != null">CREATE_BY,</if>
+			<if test="createDate != null">CREATE_DATE,</if>
+			<if test="updateBy != null">UPDATE_BY,</if>
+			<if test="updateDate != null">UPDATE_DATE,</if>
+			<if test="remarks != null">REMARKS,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="name != null">#{name},</if>
+			<if test="enname != null">#{enname},</if>
+			<if test="roleType != null">#{roleType},</if>
+			<if test="dataScope != null">#{dataScope},</if>
+			<if test="isSys != null">#{isSys},</if>
+			<if test="useable != null">#{useable},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createDate != null">#{createDate},</if>
+			<if test="updateBy != null">#{updateBy},</if>
+			<if test="updateDate != null">#{updateDate},</if>
+			<if test="remarks != null">#{remarks},</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE s_role
+		<set> 
+			<if test="name != null">NAME = #{name},</if>
+			<if test="enname != null">ENNAME = #{enname},</if>
+			<if test="roleType != null">ROLE_TYPE = #{roleType},</if>
+			<if test="dataScope != null">DATA_SCOPE = #{dataScope},</if>
+			<if test="isSys != null">IS_SYS = #{isSys},</if>
+			<if test="useable != null">USEABLE = #{useable},</if>
+			<if test="updateBy != null">UPDATE_BY = #{updateBy},</if>
+			<if test="updateDate != null">UPDATE_DATE = #{updateDate},</if>
+			<if test="remarks != null">REMARKS = #{remarks},</if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM s_role
+		WHERE ID = #{id}
+	</update>
+	
+</mapper>

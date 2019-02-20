@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basic.zyz.module.dao.RoleMenuDao">
+	
+	<sql id="roleMenuColumns">
+		a.ROLE_ID AS "roleId",
+		a.MENU_ID AS "menuId"
+	</sql>
+	
+	<sql id="roleMenuJoins">
+	</sql>
+	
+	<sql id="listOrCountSql">
+		FROM s_role_menu a
+		<include refid="roleMenuJoins"/>
+		<where>
+			<if test="roleId != null and roleId != ''">
+				AND a.ROLE_ID = #{roleId}
+			</if>
+			<if test="menuId != null and menuId != ''">
+				AND a.MENU_ID = #{menuId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="get" resultType="RoleMenu">
+		SELECT 
+			<include refid="roleMenuColumns"/>
+		FROM s_role_menu a
+		<include refid="roleMenuJoins"/>
+		WHERE a.ROLE_IDMENU_ID = #{roleId}
+	</select>
+
+	<select id="queryBy" resultType="RoleMenu">
+		SELECT
+			<include refid="roleMenuColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findListCount" resultType="long">
+		SELECT COUNT(1) <include refid="listOrCountSql"/>
+	</select>
+	
+	<select id="queryList" resultType="RoleMenu">
+		SELECT 
+			<include refid="roleMenuColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO s_role_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">ROLE_ID,</if>
+			<if test="menuId != null">MENU_ID,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">#{roleId},</if>
+			<if test="menuId != null">#{menuId},</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE s_role_menu
+		<set> 
+			<if test="roleId != null">ROLE_ID = #{roleId},</if>
+			<if test="menuId != null">MENU_ID = #{menuId},</if>
+		</set>
+		WHERE ROLE_IDMENU_ID = #{roleId}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM s_role_menu
+		WHERE ROLE_IDMENU_ID = #{roleId}
+	</update>
+	
+</mapper>

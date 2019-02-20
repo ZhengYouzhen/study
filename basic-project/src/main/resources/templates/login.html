@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+错误信息：<h4 th:text="${msg}"></h4>
+<form action="/login" method="post">
+    <p>手机号：<input type="text" name="username" value=""/></p>
+    <p>密码: <input type="text" name="password" value=""/></p>
+    <p><input type="submit" value="登录"/></p>
+    <P><input type="checkbox" name="rememberMe" />记住我</P>
+</form>
+<img src="/userfiles/20190118/expbpbrp.jpeg" th:src="@{/userfiles/20190118/zz7gFrks.jpg}"/>
+</body>
+</html>

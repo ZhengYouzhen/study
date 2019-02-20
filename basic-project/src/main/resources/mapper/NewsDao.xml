@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basic.zyz.module.dao.NewsDao">
+	
+	<sql id="newsColumns">
+		a.id AS "id",
+		a.photo AS "photo",
+		a.info_title AS "infoTitle",
+		a.sub_title AS "subTitle",
+		a.content AS "content",
+		a.create_by AS "createBy",
+		u.nick_name AS "nickName",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="newsJoins">
+		LEFT JOIN s_user u ON a.create_by = u.id
+	</sql>
+	
+	<sql id="listOrCountSql">
+		FROM t_news a
+		<include refid="newsJoins"/>
+		<where>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="photo != null and photo != ''">
+				AND a.photo = #{photo}
+			</if>
+			<if test="infoTitle != null and infoTitle != ''">
+				AND a.info_title like concat('%',#{infoTitle},'%')
+			</if>
+			<if test="subTitle != null and subTitle != ''">
+				AND a.sub_title = #{subTitle}
+			</if>
+			<if test="content != null and content != ''">
+				AND a.content = #{content}
+			</if>
+			<if test="createBy != null and createBy != ''">
+				AND a.create_by = #{createBy}
+			</if>
+			<if test="nickName != null and nickName != ''">
+				AND u.nick_name like concat('%', #{nickName},'%')
+			</if>
+			<if test="startCreateDate != null and startCreateDate != '' and endCreateDate != null and endCreateDate != ''">
+				AND a.create_date between #{startCreateDate} and #{endCreateDate}
+			</if>
+			<if test="startCreateDate != null and startCreateDate != '' and (endCreateDate == null or endCreateDate == '')">
+				AND a.create_date &gt; #{startCreateDate}
+			</if>
+			<if test="endCreateDate != null and endCreateDate != '' and (startCreateDate == null or startCreateDate == '')">
+				AND a.create_date &lt; #{endCreateDate}
+			</if>
+			<if test="updateDate != null">
+				AND a.update_date = #{updateDate}
+			</if>
+		</where>
+	</sql>
+
+	<select id="get" resultType="News">
+		SELECT 
+			<include refid="newsColumns"/>
+		FROM t_news a
+		<include refid="newsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="queryBy" resultType="News">
+		SELECT
+			<include refid="newsColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findListCount" resultType="long">
+		SELECT COUNT(1) <include refid="listOrCountSql"/>
+	</select>
+	
+	<select id="queryList" resultType="News">
+		SELECT 
+			<include refid="newsColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_news
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="photo != null">photo,</if>
+			<if test="infoTitle != null">info_title,</if>
+			<if test="subTitle != null">sub_title,</if>
+			<if test="content != null">content,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="createDate != null">create_date,</if>
+			<if test="updateDate != null">update_date,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="infoTitle != null">#{infoTitle},</if>
+			<if test="subTitle != null">#{subTitle},</if>
+			<if test="content != null">#{content},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createDate != null">#{createDate},</if>
+			<if test="updateDate != null">#{updateDate},</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE t_news
+		<set> 
+			<if test="photo != null">photo = #{photo},</if>
+			<if test="infoTitle != null">info_title = #{infoTitle},</if>
+			<if test="subTitle != null">sub_title = #{subTitle},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="updateDate != null">update_date = #{updateDate},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM t_news
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

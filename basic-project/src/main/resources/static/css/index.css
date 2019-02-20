@@ -1,0 +1,47 @@
+body {
+    font-size: 20px;
+    font-family: 微软雅黑;
+}
+
+.fonts {
+    font-size: 30px;
+    font-style: italic;
+    margin-left: 10%;
+}
+
+.call {
+    float: right;
+    margin-right: 5%;
+    font-size: 16px;
+    color: #964893;
+}
+.contain_main img{
+    cursor: pointer;
+    transition: all 0.6s;
+}
+.img:hover {
+    transform:scale(1.1);
+}
+.containDiv{
+    display:none;
+    padding-top: 16%;
+}
+.containDiv,.containDivs input{
+    font-size: 14px;
+}
+.containDivs{
+    display:none;
+    padding-top: 10%;
+}
+.links{
+     margin-top: 28%;
+     margin-left: 2%;
+     font-size: 14px;
+     color: #ed442c;
+ }
+.link{
+    margin-top: 14%;
+    margin-left: 2%;
+    font-size: 14px;
+    color: #ed442c;
+}

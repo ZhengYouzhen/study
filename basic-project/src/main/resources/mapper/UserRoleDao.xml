@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basic.zyz.module.dao.UserRoleDao">
+	
+	<sql id="userRoleColumns">
+		a.USER_ID AS "user.id",
+		a.ROLE_ID AS "roleId"
+	</sql>
+	
+	<sql id="userRoleJoins">
+	</sql>
+	
+	<sql id="listOrCountSql">
+		FROM s_user_role a
+		<include refid="userRoleJoins"/>
+		<where>
+			<if test="user != null and user.id != null and user.id != ''">
+				AND a.USER_ID = #{user.id}
+			</if>
+			<if test="roleId != null and roleId != ''">
+				AND a.ROLE_ID = #{roleId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="get" resultType="UserRole">
+		SELECT 
+			<include refid="userRoleColumns"/>
+		FROM s_user_role a
+		<include refid="userRoleJoins"/>
+		WHERE a.USER_IDROLE_ID = #{user.id|name}
+	</select>
+
+	<select id="queryBy" resultType="UserRole">
+		SELECT
+			<include refid="userRoleColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findListCount" resultType="long">
+		SELECT COUNT(1) <include refid="listOrCountSql"/>
+	</select>
+	
+	<select id="queryList" resultType="UserRole">
+		SELECT 
+			<include refid="userRoleColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO s_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="user.id != null">USER_ID,</if>
+			<if test="roleId != null">ROLE_ID,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="user.id != null">#{user.id},</if>
+			<if test="roleId != null">#{roleId},</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE s_user_role
+		<set> 
+			<if test="user.id != null">USER_ID = #{user.id},</if>
+			<if test="roleId != null">ROLE_ID = #{roleId},</if>
+		</set>
+		WHERE USER_IDROLE_ID = #{user.id|name}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM s_user_role
+		WHERE USER_IDROLE_ID = #{user.id|name}
+	</update>
+	
+</mapper>

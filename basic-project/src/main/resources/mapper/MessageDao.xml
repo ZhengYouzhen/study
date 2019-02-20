@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basic.zyz.module.dao.MessageDao">
+	
+	<sql id="messageColumns">
+		a.id AS "id",
+		(SELECT nick_name from s_user where id = a.user_by) AS "userBy",
+		(SELECT nick_name from s_user where id = a.create_by) AS "createBy",
+		a.create_date AS "createDate",
+		a.message AS "message",
+		a.state AS "state"
+	</sql>
+	
+	<sql id="messageJoins">
+	</sql>
+	
+	<sql id="listOrCountSql">
+		FROM t_message a
+		<include refid="messageJoins"/>
+		<where>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="userBy != null and userBy != ''">
+				AND a.user_by in (select  id from s_user where  nick_name LIKE concat('%',#{userBy},'%'))
+			</if>
+			<if test="createBy != null and createBy != ''">
+				AND a.create_by in (select  id from s_user where  nick_name LIKE concat('%',#{createBy},'%'))
+			</if>
+			<if test="startCreateDate != null and startCreateDate != '' and endCreateDate != null and endCreateDate != ''">
+				AND a.create_date between #{startCreateDate} and #{endCreateDate}
+			</if>
+			<if test="startCreateDate != null and startCreateDate != '' and (endCreateDate == null or endCreateDate == '')">
+				AND a.create_date &gt; #{startCreateDate}
+			</if>
+			<if test="endCreateDate != null and endCreateDate != '' and (startCreateDate == null or startCreateDate == '')">
+				AND a.create_date &lt; #{endCreateDate}
+			</if>
+			<if test="message != null and message != ''">
+				AND a.message = #{message}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+		</where>
+	</sql>
+
+	<select id="get" resultType="Message">
+		SELECT 
+			<include refid="messageColumns"/>
+		FROM t_message a
+		<include refid="messageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="queryBy" resultType="Message">
+		SELECT
+			<include refid="messageColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findListCount" resultType="long">
+		SELECT COUNT(1) <include refid="listOrCountSql"/>
+	</select>
+	
+	<select id="queryList" resultType="Message">
+		SELECT 
+			<include refid="messageColumns"/>
+		<include refid="listOrCountSql"/>
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_message
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="userBy != null">user_by,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="createDate != null">create_date,</if>
+			<if test="message != null">message,</if>
+			<if test="state != null">state,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="userBy != null">#{userBy},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createDate != null">#{createDate},</if>
+			<if test="message != null">#{message},</if>
+			<if test="state != null">#{state},</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE t_message
+		<set> 
+			<if test="userBy != null">user_by = #{userBy},</if>
+			<if test="message != null">message = #{message},</if>
+			<if test="state != null">state = #{state},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM t_message
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

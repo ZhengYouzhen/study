@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>用户信息</title>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{/css/common.css}" media="all"/>
+</head>
+<body>
+<div class="layui-row">
+    <h3>大师简介:</h3>
+    <div class="layui-col-xs5 layui-col-sm5 layui-col-md5">
+        <img th:src="@{/images/173.png}">
+    </div>
+    <div class="layui-col-xs7 layui-col-sm7 layui-col-md7">
+                    <span>
+                        年轻时酷爱易学，从事宅居人文环境研究十几年，深信人文环境对人生成长起到一定的作用。
+                        曾经花十几年的时间和财力，拜过三位知名易学风水名师，有杨筠松（杨救贫）贴身关门弟子刘江东后裔之孙刘方正师父、兴国三僚曾氏徒子后裔（郭航州）师父，还得到几位地方老仙师的真传。
+                        勘察全国各地名墓、古宅。
+                    </span>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/user.js}"></script>
+</html>
