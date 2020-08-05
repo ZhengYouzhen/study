@@ -1,5 +1,7 @@
 package com.zyz.lambdaLearn;
 
+import java.util.Objects;
+
 /**
  * @author zyz
  * @date 2018/6/21
@@ -65,5 +67,22 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Person person = (Person) o;
+        return firstName.equals(person.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName);
     }
 }

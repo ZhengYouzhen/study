@@ -2,11 +2,13 @@ package com.zyz.lambdaLearn;
 
 import java.util.*;
 
+import static java.lang.System.*;
+
 /**
  * @author zyz
  * @date 2018/6/21
  */
-public class BaseLambda{
+public class BaseLambda {
 
     public static void main(String[] args) {
         String[] atp = {"Rafael Nadal", "Novak Djokovic",
@@ -22,7 +24,8 @@ public class BaseLambda{
             }
         });*/
 //        lambda表达式
-        Arrays.sort(atp, (String s1,String s2) -> (s1.compareTo(s2)));
+//        Arrays.sort(atp, (String s1, String s2) -> (s1.compareTo(s2)));   下一行是简写
+        Arrays.sort(atp, String::compareTo);
 //        根据字符串空格后的字面排序----------------------------------------
         /*Arrays.sort(atp, new Comparator<String>() {
             @Override
@@ -34,7 +37,8 @@ public class BaseLambda{
         /*Comparator<String> comparator = (String s1, String s2) -> (s1.substring(s1.indexOf(" ")).compareTo(s2.substring(s2.indexOf(" "))));
         Arrays.sort(atp, comparator);*/
 //        lambda表达式最简写法
-        /*Arrays.sort(atp, (String s1, String s2) -> (s1.substring(s1.indexOf(" ")).compareTo(s2.substring(s2.indexOf(" ")))));*/
+//        Arrays.sort(atp, (String s1, String s2) -> (s1.substring(s1.indexOf(" ")).compareTo(s2.substring(s2.indexOf(" ")))));
+//        Arrays.sort(atp, Comparator.comparing((String s) -> s.substring(s.indexOf(" "))));
 //      根据字符串长度排序---------------------------------------------------
         /*Arrays.sort(atp, new Comparator<String>() {
             @Override
@@ -52,9 +56,9 @@ public class BaseLambda{
         Arrays.sort(atp, comparator);*/
 
         List<String> players = Arrays.asList(atp);
-//        lambada表达式遍历，-> ()，直接写返回值。-> {}，可以写方法。:: 不太懂这什么意思
+//        lambada表达式遍历，-> ()，直接写返回值。-> {}，可以写方法。-> 传递参数，:: 调用方法
         players.forEach((player) ->
-                System.out.println(player + ";")
+                out.println(player + ";")
         );
         /**
          players.forEach((player) ->{
@@ -67,15 +71,15 @@ public class BaseLambda{
          */
 //        players.forEach(System.out :: println);
 //        匿名内部类
-        new Thread(() -> System.out.println("hello world")).start();
+        new Thread(() -> out.println("hello world")).start();
 //        接口的匿名内部类
-        Runnable runnable = () -> System.out.println("is lambda!");
+        Runnable runnable = () -> out.println("is lambda!");
         runnable.run();
-        System.out.println(a() + "-----------");
-        System.out.println(LambdaTest.read() + "++++++++++++++++");
+        out.println(a() + "-----------");
+        out.println(LambdaTest.read() + "++++++++++++++++");
         LambdaTest lambdaTest = (String str) -> 5;
         lambdaTest.love();
-Set set = new LinkedHashSet();
+        Set set = new LinkedHashSet();
     }
 
     public static int a() {

@@ -2,7 +2,9 @@ package com.zyz.lambdaLearn;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.*;
@@ -17,15 +19,15 @@ public class BaseStream {
         {
             add(new Person("Elsdon", "Jaycob", "Java programmer", "male", 43, 2000));
             add(new Person("Tamsen", "Brittany", "Java programmer", "female", 23, 1500));
-            add(new Person("Floyd", "Donny", "Java programmer", "male", 33, 1800));
+            add(new Person("Floyd", "Jaycob", "Java programmer", "female", 33, 1800));
             add(new Person("Sindy", "Jonie", "Java programmer", "female", 32, 1600));
             add(new Person("Vere", "Hervey", "Java programmer", "male", 22, 1200));
             add(new Person("Maude", "Jaimie", "Java programmer", "female", 27, 1900));
             add(new Person("Shawn", "Randall", "Java programmer", "male", 30, 2300));
-            add(new Person("Jayden", "Corrina", "Java programmer", "female", 35, 1700));
+            add(new Person("Palmer", "Dene", "Java programmer", "female", 35, 1700));
             add(new Person("Palmer", "Dene", "Java programmer", "male", 33, 2000));
             add(new Person("Addison", "Pam", "Java programmer", "female", 34, 1200));
-            add(new Person("Addison", "Pam1", "Java programmer1", "female1", 341, 1300));
+            add(new Person("Addison", "Pam", "Java programmer1", "female", 341, 12001));
         }
     };
 
@@ -52,14 +54,37 @@ public class BaseStream {
      * @param args
      */
     public static void main(String[] args) {
+        //      自定义写方法根据姓去除重复
+        List<Person> personList = new ArrayList<>();
+        javaProgrammers.forEach((p2) -> {
+            boolean b = personList.stream().anyMatch(u -> {
+//                工资大于2000的剔除
+                if (p2.getSalary() > 2000) {
+                    System.out.println(p2.getSalary());
+                    return true;
+                }
+//                名称和性别相同的剔除
+                if (u.getFirstName().equals(p2.getFirstName()) && u.getGender().equals(p2.getGender())) {
+                    return true;
+                }
+                return false;
+            });
+            if (!b) {
+                personList.add(p2);
+            }
+        });
+        personList.forEach(a -> System.out.println("根据姓去除重复：" + a.getFirstName() + "，" + a.getGender() + "，" + a.getSalary()));
+        System.out.println("----------------------------------------------------");
+
         System.out.println("给程序员加薪 5% :");
         Consumer<Person> personConsumer = person -> person.setSalary(person.getSalary() / 100 * 5 + person.getSalary());
         javaProgrammers.forEach(personConsumer);
         phpProgrammers.forEach(personConsumer);
 //        System.out.println("所有程序员的姓名！");
-        /*javaProgrammers.forEach((java) -> System.out.println("java：" + java.getFirstName() + java.getSalary()));
-        phpProgrammers.forEach((php) -> System.out.println("php：" + php.getFirstName() + php.getSalary()));*/
-
+        javaProgrammers.forEach((java) -> System.out.println("java：" + java.getFirstName() + java.getSalary()));
+        phpProgrammers.forEach((php) -> System.out.println("php：" + php.getFirstName() + php.getSalary()));
+//      根据性别分组，map的key是分组字段
+        Map<String, List<Person>> groupByGender =phpProgrammers.stream().collect(Collectors.groupingBy(Person::getGender));
 //        自定义filter，使用filter方法
         Predicate<Person> ageFilter = (p) -> (p.getAge() > 25);
         Predicate<Person> salaryFilter = (p) -> (p.getSalary() > 1400);
@@ -77,7 +102,7 @@ public class BaseStream {
         Person person = javaProgrammers.stream().min((p1, p2) -> (p1.getSalary() - p2.getSalary())).get();
         System.out.println("java工资最低：" + person.getSalary());
 //        使用max方法，查询工资最高员工
-        Person person1 = phpProgrammers.stream().max((p1, p2) -> (p1.getSalary() - p2.getSalary())).get();
+        Person person1 = phpProgrammers.stream().max(Comparator.comparingInt(Person::getSalary)).get();
         System.out.println("php工资最高：" + person1.getSalary());
 //      使用map 方法,我们可以使用 collect 方法来将我们的结果集放到一个字符串,一个 Set 或一个TreeSet中:
         String java = javaProgrammers.stream().map(Person::getFirstName).collect(joining(";"));
@@ -87,7 +112,11 @@ public class BaseStream {
         TreeSet<String> people1 = phpProgrammers.stream().map(Person::getFirstName).collect(toCollection(TreeSet::new));
         people1.forEach((p) -> System.out.println("放在TreeSet中：" + p));
 //        distinct()方法
-        javaProgrammers.parallelStream().distinct().forEach((a) -> System.out.println("去重复：" + a.getFirstName()));
+        System.out.println("查找重复");
+        Set<Person> pp = javaProgrammers.stream().filter(i -> javaProgrammers.stream().filter(i::equals).count()>1).collect(toSet());
+        pp.forEach(person2 -> System.out.println(person2.getFirstName()));
+//        List<Person> distinctIdList = javaProgrammers.stream().distinct().collect(Collectors.toList());
+//        javaProgrammers.parallelStream().distinct().forEach((a) -> System.out.println("去重复：" + a.getFirstName()));
 //        计算统计发给java员工的总金额，并行流
         int totalSalary = javaProgrammers
                 .parallelStream()
@@ -113,15 +142,13 @@ public class BaseStream {
         javaProgrammers.forEach((p) -> System.out.println(p.getFirstName()));
 //        测试并行流和顺序流效率
         testPerformance();
-//      自定义写方法根据姓去除重复
-        List<Person> personList = new ArrayList<>();
-        javaProgrammers.forEach((p2) -> {
-            boolean b = personList.stream().anyMatch(u -> u.getFirstName().equals(p2.getFirstName()));
-            if (!b) {
-                personList.add(p2);
-            }
-        });
-        personList.forEach(a -> System.out.println("根据姓去除重复：" + a.getFirstName()));
+
+
+
+        List<String> list = Arrays.asList("123", "1234", "12345", "123456", "1234567", "122222223", "123", "1234", "2422");
+        System.out.println(list.stream().filter(i -> list.stream().filter(i::equals).count()>1).collect(Collectors.toSet()));
+        Map<String, Long> collectqqqq = list.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(collectqqqq);
     }
 
     public static void testPerformance() {

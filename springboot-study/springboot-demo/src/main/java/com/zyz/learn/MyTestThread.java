@@ -24,14 +24,15 @@ public class MyTestThread implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("do work!");
+        System.out.println("do work!" + System.currentTimeMillis());
     }
+
 
     public static void main(String[] args) {
         // 初始化计数器为 一
         CountDownLatch start = new CountDownLatch(1);
         ExecutorService service = Executors.newCachedThreadPool();
-        //模擬16个线程
+        //模擬5个线程
         for (int i = 0; i < 5; i++) {
             MyTestThread tt = new MyTestThread(start);
             service.execute(tt);

@@ -10,7 +10,7 @@ public class EmployeeInfo {
     private String employeeName;
     @AnTest(value = "女")
     private String employeeSex;
-    @AnTest(id = 1,name = "HYR集团",address = "河南开封")
+    @AnTest(name = "ZYZ集团", address = "中国")
     private String company;
 
     public String getEmployeeName() {
@@ -35,5 +35,13 @@ public class EmployeeInfo {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public void one() {
+        System.out.println("one");
+    }
+
+    public void two() {
+        System.out.println("two");
     }
 }

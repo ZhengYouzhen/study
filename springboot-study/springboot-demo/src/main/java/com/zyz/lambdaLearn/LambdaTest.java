@@ -34,4 +34,12 @@ public interface LambdaTest {
         return 0;
     }
 
+    default void lower() {
+        System.out.println("函数啊");
+    }
+
+    static int write() {
+        return 1;
+    }
+
 }

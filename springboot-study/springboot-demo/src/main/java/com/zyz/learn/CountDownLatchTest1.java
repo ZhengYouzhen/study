@@ -25,7 +25,7 @@ public class CountDownLatchTest1 {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Holle world！");
+            System.out.println("Holle world！" + System.currentTimeMillis());
         }
     };
 
@@ -36,6 +36,7 @@ public class CountDownLatchTest1 {
         for (int i = 0; i < 5; i++) {
             pool.execute(test.runnable);
         }
+        pool.shutdown(); //任务结束，停止线程池的所有线程
     }
 
 }

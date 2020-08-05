@@ -31,7 +31,7 @@ public class CountdownLatchTest {
                             "已接受命令");
                     Thread.sleep((long) (Math.random() * 10000));
                     System.out.println("线程" + Thread.currentThread().getName() +
-                            "回应命令处理结果");
+                            "完成命令");
 
                 } catch (Exception e) {
                     e.printStackTrace();
